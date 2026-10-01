@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kaggle Hello World — 3分で機械学習を一周する</title>
+<style>
+:root{--bg:#f7f7f5;--fg:#202124;--muted:#666;--card:#fff;--line:#ddd}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.8}
+main{max-width:820px;margin:auto;padding:56px 24px 80px}
+.eyebrow{font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+h1{font-size:clamp(2rem,6vw,4rem);line-height:1.1;margin:.3em 0 .5em}
+h2{margin-top:2.5em;border-bottom:1px solid var(--line);padding-bottom:.3em}
+.lead{font-size:1.25rem}
+.flow{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0}
+.flow span{background:var(--card);border:1px solid var(--line);padding:8px 12px;border-radius:999px}
+pre{background:#202124;color:#f1f3f4;padding:20px;border-radius:12px;overflow:auto}
+code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;margin:24px 0}
+.small{color:var(--muted);font-size:.9rem}
+a{color:inherit}
+</style>
+</head>
+<body>
+<main>
+<div class="eyebrow">Kaggle Hello World</div>
+<h1>3分で、<br>機械学習を一周する。</h1>
+
+<p class="lead">
+Kaggleを始めるとき、いきなり難しいコンペを見る必要はありません。
+まずは「データを読む → モデルを作る → 予測する」。
+この小さなループを一度、自分の手で回してみます。
+</p>
+
+<div class="flow">
+<span>Data</span><span>→</span><span>Explore</span><span>→</span>
+<span>Feature</span><span>→</span><span>Model</span><span>→</span>
+<span>Predict</span><span>→</span><span>Share</span>
+</div>
+
+<h2>1. Kaggleは何なのか</h2>
+<p>
+KaggleにはDataset、Notebook、Model、Competitionなどがあります。
+NotebookではPythonやRを使って、データ分析や機械学習を実行できます。
+DatasetをNotebookに追加して分析し、結果を共有する、という使い方ができます。
+</p>
+<p class="small">
+つまりKaggleは「モデルだけを作る場所」ではありません。
+データを持ってきて、実験して、結果を残し、他の人と共有するための環境です。
+</p>
+
+<h2>2. Hello World</h2>
+<p>まずは本当にHello World。</p>
+
+<pre><code>print("Hello, Kaggle!")</code></pre>
+
+<p>
+これだけでも、Kaggle Notebookでコードを実行するという最初の一歩になります。
+Notebookはセル単位でコードと文章を書き、実行結果を残せます。
+</p>
+
+<h2>3. 次に「データ」を作る</h2>
+<p>
+機械学習は、まずデータが必要です。
+ここでは外部Datasetを探さず、自分で小さなデータを作ります。
+</p>
+
+<pre><code>import pandas as pd
+
+df = pd.DataFrame({
+    "size": [20, 30, 40, 50, 60],
+    "price": [200, 300, 390, 520, 610]
+})
+
+df</code></pre>
+
+<p>
+sizeとpriceという2つの数字があります。
+ここから「sizeからpriceを予測できるか？」という問いを作れます。
+</p>
+
+<h2>4. モデルを作る</h2>
+
+<pre><code>from sklearn.linear_model import LinearRegression
+
+X = df[["size"]]
+y = df["price"]
+
+model = LinearRegression()
+model.fit(X, y)</code></pre>
+
+<p>
+ここで初めて「モデル」が登場します。
+モデルは、与えられたデータから関係を学習します。
+</p>
+
+<h2>5. 予測する</h2>
+
+<pre><code>prediction = model.predict([[70]])
+
+print(prediction)</code></pre>
+
+<p>
+70という新しいsizeを渡すと、priceの予測値が返ってきます。
+これで機械学習の最小ループが完成しました。
+</p>
+
+<div class="card">
+<strong>データ → 学習 → 予測</strong>
+<p style="margin-bottom:0">
+たったこれだけです。難しいアルゴリズムを覚える前に、
+この流れを体験することが重要です。
+</p>
+</div>
+
+<h2>6. Kaggleらしさは、その先にある</h2>
+<p>
+ここからDatasetを大きくしたり、可視化したり、特徴量を増やしたり、
+モデルを比較したりできます。
+さらにNotebookを共有し、他の人のNotebookを読んだりforkしたりできます。
+</p>
+
+<p>次は、こんな流れになります。</p>
+
+<pre><code>公開データ
+  ↓
+Dataset
+  ↓
+Notebook
+  ↓
+EDA
+  ↓
+Feature Engineering
+  ↓
+Model
+  ↓
+Prediction
+  ↓
+共有・比較</code></pre>
+
+<p>
+KaggleではDatasetをNotebookの入力として追加でき、
+Notebookの出力を別のDatasetとして利用することもできます。
+そのため、単発の実験だけでなくデータ処理の流れを組み立てることもできます。
+</p>
+
+<h2>7. そして、Kaggleは「モデル作成」だけではない</h2>
+<p>
+ここが最初に勘違いしやすいところです。
+Kaggleでは確かにモデルを作れます。
+しかし、モデルはイベントフローの一つのノードです。
+</p>
+
+<div class="flow">
+<span>Observe</span><span>→</span><span>Data</span><span>→</span>
+<span>Experiment</span><span>→</span><span>Model</span><span>→</span>
+<span>Prediction</span><span>→</span><span>Decision</span><span>→</span><span>Action</span>
+</div>
+
+<p>
+モデルを作って終わりではありません。
+予測を使って何をするのか。
+その結果、新しいデータが生まれ、次の実験につながります。
+</p>
+
+<h2>まとめ</h2>
+<p>
+Kaggle Hello Worldで覚えることは、難しい機械学習ではありません。
+</p>
+
+<pre><code>データを見る
+    ↓
+問いを作る
+    ↓
+モデルを作る
+    ↓
+予測する
+    ↓
+結果を残す
+    ↓
+次のデータへ</code></pre>
+
+<p class="lead">
+<strong>まず一周する。</strong><br>
+それから大きなデータ、大きなモデル、大きな問題へ進めばいい。
+</p>
+
+<p class="small">
+参考：
+<a href="https://www.kaggle.com/docs/notebooks">Kaggle Notebooks</a> /
+<a href="https://www.kaggle.com/docs/datasets">Kaggle Datasets</a> /
+<a href="https://www.kaggle.com/docs/models">Kaggle Models</a>
+</p>
+</main>
+</body>
+</html>
